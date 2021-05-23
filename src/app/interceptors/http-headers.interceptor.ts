@@ -1,7 +1,7 @@
 // using interceptor ca sa nu setam params/headers pentru fiecare request in parte. vom setat la nivel de aplicatie
 // clone the request and the headers
 // 7b821e7efd584a3eb2f5c2d924954f6d
-// https://api.rawg.io/api/games?key=YOUR_API_KEY
+// https://api.rawg.io/api/games?7b821e7efd584a3eb2f5c2d924954f6d
 // GET https://api.rawg.io/api/platforms?key=YOUR_API_KEY
 // GET https://api.rawg.io/api/games?key=YOUR_API_KEY&dates=2019-09-01,2019-09-30&platforms=18,1,7
 import {
