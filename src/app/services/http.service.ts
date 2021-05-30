@@ -9,27 +9,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class HttpService {
-  // combinam toate detaliile din acest query intr-unul singur
-  getGameDetails(id: string) {
-    const gameInfoRequest = this.http.get(`${env.BASE_URL}/${id}`); // test git
-    const gameTrailersRequest = this.http.get(`${env.BASE_URL}/${id}/movies`);
-    const gameScreenSchots = this.http.get(`${env.BASE_URL}/${id}/screenshots`);
-
-    return forkJoin({
-      gameInfoRequest,
-      gameScreenSchots,
-      gameTrailersRequest,
-    }).pipe(
-      map((resp: any) => {
-        return {
-          ...resp['gameInfoRequest'],
-          screenshots: resp['gameScreenSchots']?.results,
-          trailers: resp['gameTrailersRequest']?.results,
-        };
-      })
-    );
-  }
-
   constructor(private http: HttpClient) {}
 
   getGameList(
@@ -37,12 +16,40 @@ export class HttpService {
     search?: string
   ): Observable<APIResponse<Game>> {
     let params = new HttpParams().set('ordering', ordering);
+
     if (search) {
       params = new HttpParams().set('ordering', ordering).set('search', search);
     }
-    // vezi calea catre API in environments.ts si environments.prod.ts
-    return this.http.get<APIResponse<Game>>(env.BASE_URL, {
+
+    return this.http.get<APIResponse<Game>>(`${env.BASE_URL}/games`, {
       params: params,
     });
+  }
+
+  getGameDetails(id: string): Observable<Game> {
+    const gameInfoRequest = this.http.get(`${env.BASE_URL}/games/${id}`);
+    console.log('gameInfo --- ' + gameInfoRequest);
+    const gameTrailersRequest = this.http.get(
+      `${env.BASE_URL}/games/${id}/movies`
+    );
+    console.log('gameTrailers --- ' + gameTrailersRequest);
+    const gameScreenshotsRequest = this.http.get(
+      `${env.BASE_URL}/games/${id}/screenshots`
+    );
+    console.log('gameScreenShots --- ' + gameScreenshotsRequest);
+
+    return forkJoin({
+      gameInfoRequest,
+      gameScreenshotsRequest,
+      gameTrailersRequest,
+    }).pipe(
+      map((resp: any) => {
+        return {
+          ...resp['gameInfoRequest'],
+          screenshots: resp['gameScreenshotsRequest']?.results,
+          trailers: resp['gameTrailersRequest']?.results,
+        };
+      })
+    );
   }
 }
