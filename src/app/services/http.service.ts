@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 export class HttpService {
   // combinam toate detaliile din acest query intr-unul singur
   getGameDetails(id: string) {
-    const gameInfoRequest = this.http.get(`${env.BASE_URL}/${id}`);
+    const gameInfoRequest = this.http.get(`${env.BASE_URL}/${id}`); // test git
     const gameTrailersRequest = this.http.get(`${env.BASE_URL}/${id}/movies`);
     const gameScreenSchots = this.http.get(`${env.BASE_URL}/${id}/screenshots`);
 
