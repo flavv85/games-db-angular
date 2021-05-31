@@ -1,0 +1,70 @@
+<!-- main wrapper -->
+<div class="game-tabs">
+  <!-- tabs of our groups -->
+  <mat-tab-group mat-align-tabs="start" backgroundColor="primary">
+    <mat-tab label="About">
+      <!-- veficam cu *ngIf daca lungimea este mai mare de 0 inseamna ca avem platforma si o afisam cu *ngFor, altfel nu afisam nimic -->
+      <p *ngIf="game.parent_platforms?.length" class="game-tabs-par">
+        Platfoms:
+        <span *ngFor="let game of game.parent_platforms; let last = last"
+          >{{ game.platform.name }}<span *ngIf="!last">, </span></span
+        >
+      </p>
+      <p *ngIf="game.publishers?.length" class="game-tabs-par">
+        Publishers:
+        <span *ngFor="let publisher of game.publishers; let last = last"
+          >{{ publisher.name }}<span *ngIf="!last">, </span></span
+        >
+      </p>
+      <p *ngIf="game.website" class="game-tabs-par">
+        Website:
+        <a class="game-tabs-link" href="{{ game.website }}" target="_blank">{{
+          game.website
+        }}</a>
+      </p>
+      <hr />
+      <div
+        *ngIf="game.description"
+        [innerHTML]="game.description"
+        class="game-description"
+      ></div>
+      <p class="game-tabs-votes">
+        <!-- cream un ng-container in caz ca avem avem valori multiple de rating in votes -->
+        <ng-container *ngFor="let votes of game.ratings">
+          <!-- afisam rating cu exceptional -->
+          <span *ngIf="votes.title === 'exceptional'">
+            <mat-icon class="game-tabs-votes-up">thumb_up</mat-icon>
+            <!-- daca nu sunt voturi afisam 0 -->
+            <span class="game-tabs-votes-count">{{ votes.count || 0 }}</span>
+          </span>
+          <!-- afisam rating cu skip -->
+          <span *ngIf="votes.title === 'skip'">
+            <mat-icon class="game-tabs-votes-down">thumb_down</mat-icon>
+            <!-- daca nu sunt voturi afisam 0 -->
+            <span class="game-tabs-votes-count">{{ votes.count || 0 }}</span>
+          </span>
+        </ng-container>
+      </p>
+    </mat-tab>
+
+    <mat-tab label="Screenshots" *ngIf="game.screenshots?.length">
+      <img
+        *ngFor="let screenshot of game.screenshots"
+        src="{{ screenshot.image }}"
+        class="game-screenshot"
+        alt="screenshot"
+      />
+    </mat-tab>
+    <mat-tab label="Trailers" *ngIf="game.trailers?.length">
+      <video
+        class="game-trailer"
+        controls
+        *ngFor="let trailer of game.trailers"
+      >
+        <source src="{{ trailer.data?.max }}" type="video/mp4" />
+        your browser doesn't support video tag
+      </video>
+    </mat-tab>
+  </mat-tab-group>
+  <div></div>
+</div>

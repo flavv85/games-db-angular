@@ -39,7 +39,9 @@
           >
         </div>
       </div>
-      <!-- tabs inserts, stored in a diferent component -->
+      <!-- game details tabs, stored in app-game-tabscomponent - o sa o incarcam la sfarsitul paginii-->
+      <!-- add property input game into passing Game - asa share uim data intre preapared si child components-->
+      <app-game-tabs [game]="game"></app-game-tabs>
     </div>
   </div>
 </div>
