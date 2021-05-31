@@ -1,4 +1,5 @@
-# GamesDb
+# GamesDb - Used https://rawg.io/ public API to create a game database website with Angular 11 + Angular Material
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
 
